@@ -92,36 +92,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Is there a package to build yet?
-        id: state
-        run: |
-          if [ -s package.json ]; then
-            echo 'ready=true' >> "$GITHUB_OUTPUT"
-          else
-            echo 'ready=false' >> "$GITHUB_OUTPUT"
-            echo '::notice::package.json is empty, so there is nothing to install. Delete this guard step once it has content.'
-          fi
-
       - name: Set up Node
-        if: steps.state.outputs.ready == 'true'
         uses: actions/setup-node@v4
         with:
-          # Switch to node-version-file: '.nvmrc' once that file is filled in.
-          node-version: '22'
+          node-version-file: .nvmrc
           cache: npm
 
       - name: Install
-        if: steps.state.outputs.ready == 'true'
         run: npm ci
 
       - name: Lint
-        if: steps.state.outputs.ready == 'true'
         run: npm run lint --if-present
 
       - name: Typecheck
-        if: steps.state.outputs.ready == 'true'
-        run: npm run typecheck --if-present
+        run: npm run typecheck
 
       - name: Test
-        if: steps.state.outputs.ready == 'true'
-        run: npm test --if-present
+        run: npm test

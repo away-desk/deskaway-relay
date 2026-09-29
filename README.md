@@ -9,21 +9,26 @@ persistent state (Postgres, Redis, S3).
 
 ## Status
 
-**Early development, nothing works yet.**
+**Early development. No server yet.**
 
-The module layout is settled and every file is in place, but they are all
-empty — there is no server to boot, no route that responds, and
-`package.json` has no dependencies or scripts in it yet. There are no
-migrations, so there is no schema either.
+The module layout is settled and most files are still empty placeholders:
+there is no server to boot, no route that responds, and no migrations. What
+exists is the TypeScript project and its link to the wire contract —
+`@deskaway/protocol`'s generated types and checker, the router's `stamp()`, and
+tests that run every protocol example through the relay's side.
 
 ## Running locally
 
-Not yet possible: `package.json` is an empty file, so there is nothing to
-install and nothing to start.
+What runs today:
 
-The dependencies it will need are already declared in the repo — pinned Node
-in `.nvmrc`, and Postgres plus Redis in `docker/docker-compose.dev.yml`. The
-intended path, once the manifest and entrypoint exist:
+```sh
+git clone https://github.com/away-desk/deskaway-relay.git
+cd deskaway-relay
+nvm use && npm ci
+npm run typecheck && npm test
+```
+
+The server itself arrives on Day 4. The intended path once it exists:
 
 ```sh
 git clone https://github.com/away-desk/deskaway-relay.git
@@ -40,8 +45,8 @@ npm run dev                              # http + ws on localhost
 ```
 
 Target is under ten minutes on a cold clone, with the Docker image pull
-being most of it. `docs/local-setup.md` will carry the detail, including
-which `.env` values can stay as dummies — it is currently empty.
+being most of it. `docs/local-setup.md` has the detail, including how to move
+the pinned protocol commit forward.
 
 ## The rest of DeskAway
 

@@ -9,6 +9,15 @@ and this repository follows [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- TypeScript project: package.json, tsconfig (strict), Node 24 pinned in
+  .nvmrc, with typecheck and test scripts; CI now runs them.
+- @deskaway/protocol as a git dependency pinned to a protocol commit: the
+  generated message types and the one message checker.
+- src/ws/router.ts: stamp(), the only place a relay block is created, and
+  streamKey() for per-session, per-receiver streams.
+- Contract tests running every protocol example through the checker, unit
+  tests for stamp(), and type tests proving a field typo fails to compile.
+- ADR 0004: consume the protocol as a pinned git dependency.
 - ADRs 0001 to 0003: the relay stamps from, receivedAt and sequence and its
   clock is authoritative; an invalid message closes the connection with a
   close reason; resume is by sequence and dedupe by envelope id.

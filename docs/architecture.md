@@ -35,7 +35,10 @@ now, when forwarding the key "just for this one case" looks like the fast fix.
 
 ## Internal pieces, and how a message flows
 
-**`ws/`** — `server` accepts sockets; `router` dispatches by envelope type;
+**`ws/`** — `server` accepts sockets; `router` routes on the envelope alone —
+`stamp()` turns an inbound message into an outbound one and is the only place a
+relay block is created, and `streamKey()` names the per-session, per-receiver
+stream that `sequence` counts in;
 `connection-registry` maps devices and sessions to live sockets; `heartbeat`
 decides who is still there; `backpressure` handles a consumer too slow to keep up.
 Handlers in `ws/handlers/` are thin: validate and delegate.
@@ -103,7 +106,7 @@ Two supporting rules:
 | **outbound** | Redis | cross-instance pub/sub |
 | **outbound** | S3 | run transcripts |
 | **outbound** | push provider | phone wakeups |
-| — | `deskaway-protocol` | build-time only; message shapes |
+| — | `deskaway-protocol` | `@deskaway/protocol`, a git dependency pinned to a commit: generated message types plus the one checker every frame goes through (ADR 0004) |
 
 Both clients dial in; the relay dials out to everything else. It never initiates a
 connection to a user's device, so there is no port to reach on anyone's machine.
