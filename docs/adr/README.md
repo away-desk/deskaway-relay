@@ -9,6 +9,7 @@ worse, undo it without knowing what it was for.
 | [0001](./0001-relay-stamps-from-received-at-sequence.md) | The relay stamps `from`, `receivedAt` and `sequence`, and its clock is the authority |
 | [0002](./0002-invalid-message-closes-connection.md) | An invalid message closes the connection, with a reason |
 | [0003](./0003-resume-by-sequence-dedupe-by-id.md) | Resume by sequence, dedupe by envelope id |
+| [0004](./0004-consume-protocol-as-pinned-git-dependency.md) | Consume the protocol as a pinned git dependency, through its own checker |
 
 The wire decisions these build on are in `deskaway-protocol/docs/adr/`.
 

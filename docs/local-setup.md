@@ -1,13 +1,48 @@
 # Local setup — deskaway-relay
 
-**Nothing runs yet.** `package.json` is an empty file, so there is nothing to
-install and no server to start. This page describes the setup as it is intended
-to work. Correct it in the same pull request that makes it true.
+**No server runs yet.** What works today is the TypeScript project: the
+protocol types, `src/ws/router.ts`, and its tests. The server steps further down
+describe the setup as it is intended to work from Day 4; correct them in the
+pull request that makes them true.
+
+## What works today
+
+```sh
+git clone https://github.com/away-desk/deskaway-relay.git
+cd deskaway-relay
+
+nvm use          # Node 24, from .nvmrc
+npm ci           # installs @deskaway/protocol from GitHub at the pinned commit
+npm run typecheck
+npm test
+```
+
+How to tell it is working: `typecheck` prints nothing and exits 0; `npm test`
+ends with `Test Files  2 passed` and every test passing — one contract test per
+protocol example, plus the router's unit tests.
+
+`npm ci` needs network access to github.com, because `@deskaway/protocol` is a
+git dependency rather than a registry package (until Day 20). It is fetched over
+HTTPS; no SSH key is needed, even though `package-lock.json` records the URL as
+`git+ssh`.
+
+### Moving to a newer protocol
+
+The protocol is pinned to one commit, in `package.json`. To move it:
+
+```sh
+npm install --save-exact "git+https://github.com/away-desk/deskaway-protocol.git#<new-commit>"
+npm run typecheck && npm test
+```
+
+Do it in a pull request of its own. If the typecheck fails, a message shape the
+relay relies on changed; if a contract test fails, the protocol changed what an
+example means. Either is the point of pinning: you find out here, not in
+production.
 
 ## What you need
 
-- Node, at the version pinned in `.nvmrc` (also empty — pin it when the package
-  is set up).
+- Node 24, as pinned in `.nvmrc`.
 - Docker, for Postgres and Redis.
 
 This is the heaviest component to run locally, because it is the only one with
@@ -60,10 +95,10 @@ the Docker image pull.
 ## Tests
 
 ```sh
-npm test                      # unit
-npm run test:integration      # needs the compose stack running
-npm run lint
-npm run typecheck
+npm test                      # unit + contract (today); no Docker needed
+npm run typecheck             # includes test/types: a field typo must not compile
+npm run test:integration      # from Day 5; needs the compose stack running
+npm run lint                  # from Day 4
 ```
 
 `test/unit` must not require Docker. `test/integration`, `test/contract` and

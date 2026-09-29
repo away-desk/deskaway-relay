@@ -1,0 +1,23 @@
+{
+  "name": "deskaway-relay",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The DeskAway cloud broker: sockets, pairing, sessions, recording.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@deskaway/protocol": "github:away-desk/deskaway-protocol#97bc57e1fed8b91cbd4552d4ebf5172c92b69035"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.0",
+    "typescript": "7.0.2",
+    "vitest": "5.0.2"
+  }
+}
