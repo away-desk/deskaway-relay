@@ -4,8 +4,13 @@ One file per decision made about this component. An ADR records *why* a choice
 was made, so nobody has to reverse-engineer the reasoning from the code — or
 worse, undo it without knowing what it was for.
 
-Nothing is recorded here yet. The first ADR arrives with the first decision worth
-arguing about.
+| ADR | Decision |
+| --- | --- |
+| [0001](./0001-relay-stamps-from-received-at-sequence.md) | The relay stamps `from`, `receivedAt` and `sequence`, and its clock is the authority |
+| [0002](./0002-invalid-message-closes-connection.md) | An invalid message closes the connection, with a reason |
+| [0003](./0003-resume-by-sequence-dedupe-by-id.md) | Resume by sequence, dedupe by envelope id |
+
+The wire decisions these build on are in `deskaway-protocol/docs/adr/`.
 
 ## Format
 
